@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title th:text="#{title.log.in}"></title>
+        <link rel="icon" th:href="@{/assets/bank-icon.png}">
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{/css/main.css}">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    </head>
+    <body class="bg-navy">
+        <header class="navbar fixed-top navbar-expand-lg navbar-light bg-light smooth-shadow">
+            <a class="navbar-brand scroll-top">
+                <img src="https://belgazprombank.by/uploads/userfiles/images/logorus.png"
+                      height="30" class="d-inline-block align-top" alt="Image">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}"><span th:text="#{nav.home}"></span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/worker/profile}"><span th:text="#{nav.profile}"></span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/client}"><span th:text="#{nav.clients}"></span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/operations}"><span th:text="#{nav.actions}"></span></a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <div class="container">
+            <div class="row row-center">
+                <div class="col-md-3"></div>
+                <div class="col-md-6 rounded-container smooth-shadow">
+                    <div class="form">
+                        <h1>Авторизация</h1>
+                        <form th:action="@{/worker/authenticate}" method="post">
+                            <div class="input-group mb-2 mr-sm-2 input">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">@</div>
+                                </div>
+                                <input id="username" type="email" name="username" class="form-control"
+                                       th:placeholder="#{worker.username} + ':'">
+                            </div>
+                            <div class="input-group mb-2 mr-sm-2 input">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-key"></i></div>
+                                </div>
+                                <input type="password" name="password" class="form-control"
+                                       th:placeholder="#{worker.password} + ':'">
+                            </div>
+                            <div class="input">
+                                <button type="submit" class="btn btn-custom btn-success">
+                                    <span th:text="#{btn.login}"></span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+        <script th:src="@{/js/jquery-3.3.1.js}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                crossorigin="anonymous"></script>
+        <script th:src="@{/js/main.js}"></script>
+        <script th:src="@{/js/worker/workerService.js}"></script>
+        <script th:src="@{/js/worker/workerController.js}"></script>
+    </body>
+</html>

@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title th:text="#{title.client.show} + ' ' + ${client.passport.id}"></title>
+        <link rel="icon" th:href="@{/assets/bank-icon.png}">
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{/css/main.css}">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    </head>
+    <body class="bg-navy">
+        <header class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand scroll-top">
+                <img src="https://belgazprombank.by/uploads/userfiles/images/logorus.png"
+                      height="30" class="d-inline-block align-top" alt="Image">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}"><span th:text="#{nav.home}"></span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/worker/profile}"><span th:text="#{nav.profile}"></span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active dropdown-toggle scroll-top" role="button"
+                           data-toggle="dropdown"><span th:text="#{nav.clients}"></span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item"
+                               th:text="#{nav.clients.all}" th:href="@{/client}"></a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item"
+                               th:text="#{nav.clients.edit}" th:href="@{'/client/edit/' + ${client.id}}"></a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item"
+                               th:text="#{nav.clients.delete}" th:href="@{/client/delete}"></a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/operations}"><span th:text="#{nav.actions}"></span></a>
+                    </li>
+                </ul>
+                <div class="logout">
+                    <form class="form-inline my-2 my-lg-0" th:action="@{/worker/logOut}">
+                        <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span th:text="#{btn.logout}"></span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </header>
+        <div class="container-fluid">
+            <div class="row row-center">
+                <div class="col-12">
+                    <div class="rounded-container smooth-shadow">
+                        <div class="title-container">
+                            <i class="avatar fas fa-user-astronaut"></i>
+                            <h2>
+                                <span th:text="
+                                    ${client.passport.lastName} + ' ' +
+                                    ${client.passport.firstName} + ' ' +
+                                    ${client.passport.middleName}">
+                                </span>
+                                <span class="badge badge-success"></span>
+                            </h2>
+                        </div>
+                        <div class="card smooth-shadow">
+                            <div class="card-header">
+                                <ul class="nav nav-pills card-header-pills">
+
+                                    <!--General-info-->
+                                    <li class="nav-item">
+                                        <button id="btn-general-info" class="btn nav-link active"
+                                                onclick="showGeneralInfo()">
+                                            <span th:text="#{client.general.information}"></span>
+                                        </button>
+                                    </li>
+
+                                    <!--Contacts-->
+                                    <li class="nav-item">
+                                        <button id="btn-contacts" class="btn nav-link"
+                                                onclick="showContactInfo()">
+                                            <span th:text="#{client.contact.information}"></span>
+                                        </button>
+                                    </li>
+
+                                    <!--Personal-info-->
+                                    <li class="nav-item">
+                                        <button id="btn-personal-info" class="btn nav-link"
+                                                onclick="showPersonalInfo()">
+                                            <span th:text="#{client.private.information}"></span>
+                                        </button>
+                                    </li>
+
+                                    <!--Edit-->
+                                    <li class="nav-item">
+                                        <a class="btn nav-link" th:href="@{'/client/edit/' + ${client.id}}">
+                                            <span th:text="#{client.profile.edit}"></span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                            <!--General-info-->
+                            <div id="general-info" class="card-body">
+                                <div class="user-info">
+
+                                    <!--FIO-->
+                                    <section>
+                                        <h4>
+                                            <i class="fas fa-user"></i>
+                                            <span th:text="#{txt.fio} + ':'"></span>
+                                        </h4>
+
+                                        <br>
+
+                                        <div class="form-row">
+
+                                            <!--Last Name-->
+                                            <div class="form-group col-md-12">
+                                                <label for="txt-last-name"
+                                                       th:text="#{placeholder.input.last.name} + ':'"></label>
+                                                <input type="text" class="form-control" id="txt-last-name"
+                                                       th:placeholder="#{placeholder.input.last.name}"
+                                                       th:value="${client.passport.lastName}" disabled/>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+
+                                            <!--First Name-->
+                                            <div class="form-group col-md-6">
+                                                <label for="txt-first-name"
+                                                       th:text="#{placeholder.input.first.name} + ':'"></label>
+                                                <input type="text" class="form-control" id="txt-first-name"
+                                                       th:placeholder="#{placeholder.input.first.name}"
+                                                       th:value="${client.passport.firstName}" disabled/>
+                                            </div>
+
+                                            <!--Middle Name-->
+                                            <div class="form-group col-md-6">
+                                                <label for="txt-middle-name"
+                                                       th:text="#{placeholder.input.middle.name} + ':'"></label>
+                                                <input type="text" class="form-control" id="txt-middle-name"
+                                                       th:placeholder="#{placeholder.input.middle.name}"
+                                                       th:value="${client.passport.middleName}" disabled/>
+                                            </div>
+                                        </div>
+                                        <br>
+                                    </section>
+
+                                    <!--Birth date-->
+                                    <section>
+                                        <h4>
+                                            <i class="fas fa-calendar-alt"></i>
+                                            <label for="txt-birth-date"
+                                                   th:text="#{passport.birth.date}"></label>
+                                        </h4>
+
+                                        <br>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <label for="txt-birth-date"
+                                                       th:text="#{placeholder.input.birth.date} + ':'"></label>
+                                                <input type="text" class="form-control" id="txt-birth-date"
+                                                       th:placeholder="#{placeholder.input.birth.date}"
+                                                       th:value="${#dates.format(client.passport.birthDate,'dd.MM.yyyy')}"
+                                                       disabled/>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    <!--Gender-->
+                                    <section>
+                                        <h4>
+                                            <span th:text="#{passport.gender.label}"></span>
+                                        </h4>
+
+                                        <br>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <label for="txt-birth-date"
+                                                       th:text="#{passport.gender.label} + ':'"></label>
+                                                <br>
+
+                                                <div th:switch="${client.passport.isMale}">
+
+                                                    <div th:case="true" class="form-row">
+
+                                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                            <label class="btn btn-secondary active">
+                                                                <input type="radio" name="gender" value="true" disabled
+                                                                       checked>
+                                                                <span th:text="#{passport.gender.male}"></span>
+                                                            </label>
+                                                            <label class="btn btn-outline-secondary disabled">
+                                                                <input type="radio" name="gender" value="false"
+                                                                       disabled>
+                                                                <span th:text="#{passport.gender.female}"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div th:case="false" class="form-row">
+
+                                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                            <label class="btn btn-outline-secondary disabled">
+                                                                <input type="radio" name="gender" value="true" disabled>
+                                                                <span th:text="#{passport.gender.male}"></span>
+                                                            </label>
+                                                            <label class="btn btn-secondary">
+                                                                <input type="radio" name="gender" value="false" disabled
+                                                                       checked>
+                                                                <span th:text="#{passport.gender.female}"></span>
+                                                            </label>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    <hr>
+
+                                    <!--Company-->
+                                    <section>
+                                        <h4>
+                                            <i class="fas fa-briefcase"></i>
+                                            <span th:text="#{client.working.place}"></span>
+                                        </h4>
+                                        <br>
+                                        <!--name-->
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12">
+                                                <label for="txt-company-name"
+                                                       th:text="#{placeholder.input.company.name} + ':'"></label>
+                                                <input type="text" class="form-control" id="txt-company-name"
+                                                       th:placeholder="#{placeholder.input.company.name}"
+                                                       th:value="${client.companyName}" disabled/>
+                                            </div>
+                                        </div>
+
+                                        <!--position-->
+                                        <div class="form-row">
+                                            <div class="form-group col-md-8">
+                                                <label for="txt-position"
+                                                       th:text="#{placeholder.input.position} + ':'"></label>
+                                                <input type="text" class="form-control" id="txt-position"
+                                                       th:placeholder="#{placeholder.input.position}"
+                                                       th:value="${client.position}" disabled/>
+                                            </div>
+
+                                            <!--income-->
+                                            <div class="form-group col-md-4">
+                                                <label for="txt-income-per-mouth"
+                                                       th:text="#{placeholder.income.per.month} + ':'"></label>
+                                                <input type="number" class="form-control" id="txt-income-per-mouth"
+                                                       th:placeholder="#{placeholder.income.per.month}"
+                                                       th:value="${client.incomePerMonth}" disabled/>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    <!--Next-->
+                                    <div class="form-row">
+                                        <div class="form-group col-md-8"></div>
+                                        <div class="form-group col-md-4">
+                                            <button class="btn btn-primary float-right"
+                                                    onclick="showContactInfo()">
+                                                <span th:text="#{btn.next}"></span>
+                                                <i class="fas fa-arrow-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Contact info-->
+                            <div id="contact-info" class="card-body" style="display: none">
+                                <div class="user-info">
+
+                                    <!--Living address-->
+                                    <section>
+                                        <h4>
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <span th:text="#{client.living.address} + ':'"></span>
+                                        </h4>
+
+                                        <br>
+
+                                        <div class="form-row">
+
+                                            <!--Country-->
+                                            <div class="form-group col-md-6">
+                                                <label for="select-living-address-country"
+                                                       th:text="#{placeholder.input.country} + ':'"></label>
+                                                <select id="select-living-address-country" class="form-control"
+                                                        disabled>
+                                                    <option th:value="${client.address.country.iso3code}"
+                                                            th:text="${client.address.country.countryName}"></option>
+                                                </select>
+                                            </div>
+
+                                            <!--City-->
+                                            <div class="form-group col-md-6">
+                                                <label for="txt-living-address-city"
+                                                       th:text="#{placeholder.input.city}">City</label>
+                                                <input type="text" class="form-control"
+                                                       id="txt-living-address-city"
+                                                       th:placeholder="#{placeholder.input.city}"
+                                                       th:value="${client.address.city}"
+                                                       disabled/>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+
+                                            <!--Street-->
+                                            <div class="form-group col-md-6">
+                                                <label for="txt-living-address-street"
+                                                       th:text="#{placeholder.input.street} + ':'"></label>
+                                                <input type="text" class="form-control"
+                                                       id="txt-living-address-street"
+                                                       th:placeholder="#{placeholder.input.street}"
+                                                       th:value="${client.address.street}"
+                                                       disabled/>
+                                            </div>
+
+                                            <!--Building number-->
+                                            <div class="form-group col-md-3">
+                                                <label for="txt-living-address-building-number"
+                                                       th:text="#{label.input.building.number} + ':'"></label>
+                                                <input type="number" class="form-control"
+                                                       id="txt-living-address-building-number"
+                                                       th:placeholder="#{placeholder.input.building.number}"
+                                                       th:value="${client.address.buildingNumber}"
+                                                       disabled/>
+                                            </div>
+
+                                            <!--Apartment number-->
+                                            <div class="form-group col-md-3">
+                                                <label for="txt-living-address-apartment-number"
+                                                       th:text="#{placeholder.input.apartment.number} + ':'"></label>
+                                                <input type="number" class="form-control"
+                                                       id="txt-living-address-apartment-number"
+                                                       th:placeholder="#{placeholder.input.apartment.number}"
+                                                       th:value="${client.address.apartmentNumber}"
+                                                       disabled/>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-row">
+
+                                            <!--Post code-->
+                                            <div class="form-group col-md-6">
+                                                <label for="txt-living-address-post-code"
+                                                       th:text="#{placeholder.input.post.code} + ':'"></label>
+                                                <input type="number" class="form-control"
+                                                       id="txt-living-address-post-code"
+                                                       th:placeholder="#{placeholder.input.post.code}"
+                                                       th:value="${client.address.postCode}"
+                                                       disabled/>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    <hr>
+
+                                    <!--Phones-->
+                                    <section>
+                                        <h4>
+                                            <i class="fas fa-phone"></i>
+                                            <span th:text="#{txt.phones}"></span>
+                                        </h4>
+
+                                        <br>
+
+                                        <div class="form-row">
+
+                                            <!--Mobile phone-->
+                                            <div class="form-group col-md-6">
+                                                <label for="txt-mobile-number"
+                                                       th:text="#{placeholder.input.mobile.phone.number} + ':'"></label>
+                                                <input type="tel" class="form-control" id="txt-mobile-number"
+                                                       th:placeholder="#{placeholder.input.mobile.phone.number}"
+                                                       th:value="${client.mobilePhoneNumber}"
+                                                       disabled/>
+                                            </div>
+
+                                            <!--Home phone-->
+                                            <div class="form-group col-md-6">
+                                                <label for="txt-home-number"
+                                                       th:text="#{placeholder.input.home.phone.number} + ':'"></label>
+                                                <input type="tel" class="form-control" id="txt-home-number"
+                                                       th:placeholder="#{placeholder.input.home.phone.number}"
+                                                       th:value="${client.homePhoneNumber}"
+                                                       disabled/>
+                                            </div>
+                                        </div>
+
+                                    </section>
+
+                                    <!--Email-->
+                                    <section>
+                                        <h4>
+                                            <i class="fas fa-at"></i>
+                                            <span th:text="#{label.email}"></span>
+                                        </h4>
+
+                                        <br>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="txt-email"
+                                                       th:text="#{placeholder.input.email} + ':'"></label>
+                                                <input type="email" class="form-control" id="txt-email"
+                                                       th:placeholder="#{placeholder.input.email}"
+                                                       th:value="${client.email}"
+                                                       disabled/>
+                                            </div>
+                                        </div>
+                                        <div class="input-group mb-3">
+
+                                        </div>
+                                    </section>
+
+                                    <!--Next-->
+                                    <div class="form-row">
+                                        <div class="form-group col-md-8"></div>
+                                        <div class="form-group col-md-4">
+                                            <button class="btn btn-primary float-right"
+                                                    onclick="showPersonalInfo()">
+                                                <span th:text="#{btn.next}"></span>
+                                                <i class="fas fa-arrow-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Personal-info-->
+                            <div id="personal-info" class="card-body" style="display: none">
+                                <div class="user-info">
+
+                                    <!--Passport-->
+                                    <section>
+                                        <h4>
+                                            <i class="fas fa-passport"></i>
+                                            <span th:text="#{txt.passport}"></span>
+                                        </h4>
+
+                                        <br>
+
+                                        <!--Passport id-->
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12">
+                                                <label for="txt-passport-id"
+                                                       th:text="#{placeholder.input.passport.id} + ':'"></label>
+                                                <input type="text" class="form-control" id="txt-passport-id"
+                                                       th:placeholder="#{placeholder.input.passport.id}"
+                                                       th:value="${client.passport.id}"
+                                                       disabled/>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+
+                                            <!--Passport series-->
+                                            <div class="form-group col-md-4">
+                                                <label for="txt-passport-series"
+                                                       th:text="#{placeholder.input.passport.series} + ':'"></label>
+                                                <input type="text" class="form-control" id="txt-passport-series"
+                                                       th:placeholder="#{placeholder.input.passport.series}"
+                                                       th:value="${client.passport.series}"
+                                                       disabled/>
+                                            </div>
+
+                                            <!--Passport number-->
+                                            <div class="form-group col-md-8">
+                                                <label for="txt-passport-number"
+                                                       th:text="#{placeholder.input.passport.number} + ':'"></label>
+                                                <input type="number" class="form-control" id="txt-passport-number"
+                                                       th:placeholder="#{placeholder.input.passport.number}"
+                                                       th:value="${client.passport.number}"
+                                                       disabled/>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-row">
+                                            <!--Citizenship-->
+                                            <div class="form-group col-md-12">
+                                                <label for="select-birthplace"
+                                                       th:text="#{placeholder.input.country} + ':'"></label>
+                                                <div class="input-group mb-3">
+                                                    <select class="custom-select" id="select-birthplace" disabled>
+                                                        <option th:value="${client.passport.citizenship.iso3code}"
+                                                                th:text="${client.passport.citizenship.countryName}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+
+                                            <!--Passport authority-->
+                                            <div class="form-group col-md-4">
+                                                <label for="txt-passport-authority"
+                                                       th:text="#{placeholder.input.passport.authority} + ':'"></label>
+                                                <input type="text" class="form-control" id="txt-passport-authority"
+                                                       th:placeholder="#{placeholder.input.passport.authority}"
+                                                       th:value="${client.passport.passportAuthority}"
+                                                       disabled/>
+                                            </div>
+
+                                            <!--Date of issue-->
+                                            <div class="form-group col-md-4">
+                                                <label for="date-passport-date-of-issue"
+                                                       th:text="#{placeholder.input.passport.date.of.issue} + ':'"></label>
+                                                <input type="text" class="form-control" id="date-passport-date-of-issue"
+                                                       th:placeholder="#{placeholder.input.passport.date.of.issue}"
+                                                       th:value="${#dates.format(client.passport.dateOfIssue,
+                                                       'dd.MM.yyyy')}"
+                                                       disabled/>
+                                            </div>
+
+                                            <!--Date of expire-->
+                                            <div class="form-group col-md-4">
+                                                <label for="date-passport-date-of-expire"
+                                                       th:text="#{placeholder.input.passport.date.of.expire} + ':'"></label>
+                                                <input type="text" class="form-control"
+                                                       id="date-passport-date-of-expire"
+                                                       th:placeholder="#{placeholder.input.passport.date.of.expire}"
+                                                       th:value="${#dates.format(client.passport.dateOfExpire,
+                                                       'dd.MM.yyyy')}"
+                                                       disabled/>
+
+                                            </div>
+                                        </div>
+
+                                    </section>
+
+                                    <hr>
+
+                                    <!--Registration-->
+                                    <section>
+                                        <h4>
+                                            <i class="fas fa-address-card"></i>
+                                            <span th:text="#{passport.registration}"></span>
+                                        </h4>
+
+                                        <br>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="registration-country"
+                                                       th:text="#{placeholder.input.country} + ':'"></label>
+                                                <select id="registration-country" class="form-control" disabled>
+                                                    <option th:value="${client.passport.registration.address.country.iso3code}"
+                                                            th:text="${client.passport.registration.address.country.countryName}"></option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="txt-registration-city"
+                                                       th:text="#{placeholder.input.city} + ':'"></label>
+                                                <input type="text" class="form-control" id="txt-registration-city"
+                                                       th:placeholder="#{placeholder.input.city}"
+                                                       th:value="${client.passport.registration.address.city}"
+                                                       disabled/>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="txt-registration-street"
+                                                       th:text="#{placeholder.input.street} + ':'"></label>
+                                                <input type="text" class="form-control" id="txt-registration-street"
+                                                       th:placeholder="#{placeholder.input.street}"
+                                                       th:value="${client.passport.registration.address.street}"
+                                                       disabled/>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="txt-registration-building-number"
+                                                       th:text="#{placeholder.input.building.number} + ':'"></label>
+                                                <input type="number" class="form-control"
+                                                       id="txt-registration-building-number"
+                                                       th:placeholder="#{placeholder.input.building.number}"
+                                                       th:value="${client.passport.registration.address.buildingNumber}"
+                                                       disabled/>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="txt-registration-apartment-number"
+                                                       th:text="#{placeholder.input.apartment.number} + ':'"></label>
+                                                <input type="number" class="form-control"
+                                                       id="txt-registration-apartment-number"
+                                                       th:placeholder="#{placeholder.input.apartment.number}"
+                                                       th:value="${client.passport.registration.address.apartmentNumber}"
+                                                       disabled/>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12">
+                                                <label for="txt-registration-post-code"
+                                                       th:text="#{placeholder.input.post.code} + ':'"></label>
+                                                <input type="number" class="form-control"
+                                                       id="txt-registration-post-code"
+                                                       th:placeholder="#{placeholder.input.post.code}"
+                                                       th:value="${client.passport.registration.address.postCode}"
+                                                       disabled/>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+
+                                            <!--Registration authority-->
+                                            <div class="form-group col-md-6">
+                                                <label for="txt-registration-authority"
+                                                       th:text="#{placeholder.input.passport.registration.authority} + ':'"></label>
+                                                <input type="text" class="form-control" id="txt-registration-authority"
+                                                       th:placeholder="#{placeholder.input.passport.registration.authority}"
+                                                       th:value="${client.passport.registration.registrationAuthority}"
+                                                       disabled/>
+                                            </div>
+
+                                            <!--Date registration-->
+                                            <div class="form-group col-md-6">
+                                                <label for="date-registration-date"
+                                                       th:text="#{placeholder.input.passport.registration.date} + ':'"></label>
+                                                <input type="text" class="form-control" id="date-registration-date"
+                                                       th:placeholder="#{placeholder.input.passport.date.of.expire}"
+                                                       th:value="${#dates.format(client.passport.registration.dateOfRegistration,
+                                                       'dd.MM.yyyy')}"
+                                                       disabled/>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    <hr>
+
+                                    <!--Relationship-->
+                                    <section>
+                                        <h4 th:text="#{txt.relationship}"></h4>
+                                        <div class="custom-control custom-switch">
+                                            <input class="custom-control-input" type="checkbox" id="check-is-married"
+                                                   value="true" name="isMarried"
+                                                   th:checked="${client.passport.isMarried}" disabled>
+                                            <label class="custom-control-label" for="check-is-married"
+                                                   th:text="#{client.is.married}"></label>
+                                        </div>
+                                    </section>
+
+                                    <!--Military-->
+                                    <section>
+                                        <h4 th:text="#{txt.military}"></h4>
+                                        <div class="custom-control custom-switch">
+                                            <input class="custom-control-input" type="checkbox"
+                                                   id="check-is-military-bound"
+                                                   value="true" name="isBoundToMilitaryService"
+                                                   th:checked="${client.isBoundToMilitaryService}" disabled/>
+                                            <label class="custom-control-label" for="check-is-military-bound"
+                                                   th:text="#{client.is.bound.to.military.service}"></label>
+                                        </div>
+                                    </section>
+
+                                    <!--Else-->
+                                    <section>
+                                        <h4 th:text="#{txt.else}"></h4>
+                                        <div class="custom-control custom-switch">
+                                            <input class="custom-control-input" type="checkbox" id="check-is-retiree"
+                                                   value="true" name="isRetiree" th:checked="${client.isRetiree}"
+                                                   disabled/>
+                                            <label class="custom-control-label" for="check-is-retiree"
+                                                   th:text="#{client.is.retiree}"></label>
+                                        </div>
+                                        <div class="custom-control custom-switch">
+                                            <input class="custom-control-input" type="checkbox" id="check-is-disabled"
+                                                   value="true" name="isDisabled" th:checked="${client.isDisabled}"
+                                                   disabled/>
+                                            <label class="custom-control-label" for="check-is-disabled"
+                                                   th:text="#{client.is.disabled}"></label>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script th:src="@{/js/jquery-3.3.1.js}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                crossorigin="anonymous"></script>
+        <script th:src="@{/js/main.js}"></script>
+        <script th:src="@{/js/client/clientService.js}"></script>
+        <script th:src="@{/js/client/clientController.js}"></script>
+    </body>
+</html>

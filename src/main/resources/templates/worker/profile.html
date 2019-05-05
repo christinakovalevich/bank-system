@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title th:text="#{title.worker.profile}"></title>
+        <link rel="icon" th:href="@{/assets/bank-icon.png}">
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{/css/main.css}">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    </head>
+    <body class="bg-navy">
+        <header class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand scroll-top">
+                <img src="https://belgazprombank.by/uploads/userfiles/images/logorus.png"
+                      height="30" class="d-inline-block align-top" alt="Image">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}"><span th:text="#{nav.home}"></span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active scroll-top">
+                            <span class="sr-only">(current)</span>
+                            <span th:text="#{nav.profile}"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/client}"><span th:text="#{nav.clients}"></span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/operations}"><span th:text="#{nav.actions}"></span></a>
+                    </li>
+                </ul>
+                <div class="logout">
+                    <form class="form-inline my-2 my-lg-0" th:action="@{/worker/logOut}">
+                        <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span th:text="#{btn.logout}"></span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </header>
+        <div class="container-fluid">
+            <div class="row row-center">
+                <div class="col-12">
+                    <div class="rounded-container smooth-shadow">
+                        <div class="title-container">
+                            <div th:switch="${worker.accessLevel.id}">
+                                <span th:case="1"><i class="avatar fas fa-user-secret"></i></span>
+                                <span th:case="*"><i class="avatar fas fa-user-tie"></i></span>
+                            </div>
+                            <h2>
+                                <span th:text="#{worker.greeting.text}"></span>
+                                <span class="badge badge-success" th:text="${worker.username}"></span>
+                            </h2>
+                        </div>
+                        <div class="card smooth-shadow">
+                            <div class="card-header">
+                                <ul class="nav nav-pills card-header-pills">
+                                    <li class="nav-item">
+                                        <button id="btn-general" class="btn nav-link active"
+                                           onclick="showCard('#general', '#btn-general')">
+                                            <span th:text="#{worker.public.information}"></span>
+                                        </button>
+                                    </li>
+                                    <li class="nav-item">
+                                        <button id="btn-personal" class="btn nav-link"
+                                           onclick="showCard('#personal', '#btn-personal')">
+                                            <span th:text="#{worker.private.information}"></span>
+                                        </button>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link">
+                                            <span th:text="#{worker.profile.edit}"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div id="general" class="card-body">
+                                <div class="user-info">
+                                    <h5>
+                                        <span th:text="#{passport.last.name}"></span>:
+                                        <span th:text="${worker.passport.lastName}"></span>
+                                    </h5>
+                                    <h5>
+                                        <span th:text="#{passport.first.name}"></span>:
+                                        <span th:text="${worker.passport.firstName}"></span>
+                                    </h5>
+                                    <h5>
+                                        <span th:text="#{passport.middle.name}"></span>:
+                                        <span th:text="${worker.passport.middleName}"></span>
+                                    </h5>
+                                    <h5>
+                                        <span th:text="#{worker.username}"></span>:
+                                        <span th:text="${worker.username}"></span>
+                                    </h5>
+                                    <h5>
+                                        <span th:text="#{worker.access.level}"></span>:
+                                        <span th:text="${worker.accessLevel.label}"></span>
+                                    </h5>
+                                </div>
+                            </div>
+
+                            <div id="personal" class="card-body" style="display: none">
+                                <div class="user-info">
+                                    <h5>
+                                        <span th:text="#{passport.birth.date}"></span>:
+                                        <span th:text="${#dates.format(worker.passport.birthDate,'dd.MM.yyyy')}"></span>
+                                    </h5>
+                                    <h5>
+                                        <span th:text="#{passport.gender.label}"></span>:
+                                        <span th:text="(${worker.passport.isMale} ?
+                                            #{passport.gender.male} : #{passport.gender.female})">
+                                        </span>
+                                    </h5>
+                                    <h5>
+                                        <span th:text="#{passport.id}"></span>:
+                                        <span th:text="${worker.passport.id}"></span>
+                                    </h5>
+                                    <h5>
+                                        <span th:text="#{passport.series}"></span>:
+                                        <span th:text="${worker.passport.series}"></span>
+                                    </h5>
+                                    <h5>
+                                        <span th:text="#{passport.number}"></span>:
+                                        <span th:text="${worker.passport.number}"></span>
+                                    </h5>
+                                    <h5>
+                                        <span th:text="#{passport.country.name}"></span>:
+                                        <span th:text="${worker.passport.citizenship.countryName}"></span>
+                                    </h5>
+                                    <h5>
+                                        <span th:text="#{passport.date.of.issue}"></span>:
+                                        <span th:text="${#dates.format(worker.passport.dateOfIssue,'dd.MM.yyyy')}"></span>
+                                    </h5>
+                                    <h5>
+                                        <span th:text="#{passport.date.of.expire}"></span>:
+                                        <span th:text="${#dates.format(worker.passport.dateOfExpire,'dd.MM.yyyy')}"></span>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script th:src="@{/js/jquery-3.3.1.js}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                crossorigin="anonymous"></script>
+        <script th:src="@{/js/main.js}"></script>
+        <script th:src="@{/js/worker/workerService.js}"></script>
+        <script th:src="@{/js/worker/workerController.js}"></script>
+    </body>
+</html>

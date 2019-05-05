@@ -1,0 +1,181 @@
+body {
+    color: #333333;
+    background: #fafafa;
+}
+
+header {
+    opacity: 0.9;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+p {
+    font-size: 1.25rem;
+    line-height: 1.5;
+}
+
+tbody tr {
+    cursor: pointer;
+}
+
+blockquote {
+    quotes: "\201C""\201D""\2018""\2019";
+}
+
+blockquote :before {
+    content: open-quote;
+}
+
+section {
+    margin: 3% 0;
+}
+
+.nav-link {
+    font-weight: 600;
+}
+
+.btn {
+    font-weight: 600;
+}
+
+.bg-blue {
+    background-image: url("../assets/blue-h.jpg");
+    background-size: cover;
+}
+
+.bg-navy {
+    background-image: url("../assets/navy-h.jpg");
+    background-size: cover;
+}
+
+.bg-pink {
+    background-image: url("../assets/pink-h.jpg");
+    background-size: cover;
+}
+
+.bg-orange {
+    background-image: url("../assets/orange-h.jpg");
+    background-size: cover;
+}
+
+.title-container {
+    text-align: center;
+    margin: 2% 0;
+    padding: 3% 2%;
+    border-radius: .5rem;
+}
+
+.rounded-container {
+    padding: 1.25rem;
+    border-radius: .5rem;
+    background: #ffffff;
+}
+
+.table-container {
+    padding: 1%;
+    border-radius: .5rem;
+}
+
+.user-info {
+    padding: 40px;
+    border-radius: .5rem;
+    /*border: rgba(0,0,0,.125) 1px solid;*/
+    background: #f8f9fa;
+}
+
+.row-center {
+    margin: 7% 0;
+}
+
+.smooth-shadow {
+    box-shadow: 0 0 50px rgba(0,0,0,0.2);
+}
+
+.color {
+    padding: 5px;
+    border-radius: .5rem;
+    width: 20%;
+    text-align: center;
+}
+
+.yellow {
+    background: #ffc107;
+}
+
+.green {
+    background: #28a745;
+    color: #ffffff;
+}
+
+.red {
+    background: #dc3545;
+    color: #ffffff;
+}
+
+.blue {
+    background: #007bff;
+    color: #ffffff;
+}
+
+.black {
+    background: #333333;
+    color: #ffffff;
+}
+
+.info-value {
+    color: #686868;
+}
+
+.logout {
+    !important;
+    position: fixed;
+    right: 2%
+}
+
+.input {
+    margin: 5% 0;
+}
+
+.btn-custom {
+    width: 20%;
+}
+
+.card {
+    border: none;
+}
+
+.form {
+    margin: 1.5rem;
+}
+
+.error-code span {
+    font-size: 250px;
+    font-weight: bolder;
+}
+
+.error-message span {
+    font-size: 42px;
+    font-weight: 200;
+
+}
+
+.error-container {
+    background: #fafafa;
+    padding: 2%;
+    border-radius: .5rem;
+    text-align: center;
+    margin-top: 5%;
+}
+
+.button-container {
+    margin: 5% 0;
+}
+
+.container-fluid .avatar {
+    margin: 1% 0;
+    font-size: 64px;
+}
