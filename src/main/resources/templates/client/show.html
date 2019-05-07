@@ -12,11 +12,12 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     </head>
-    <body class="bg-navy">
+    <body class="bg-blue">
         <header class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand scroll-top">
-                <img src="https://belgazprombank.by/uploads/userfiles/images/logorus.png"
-                      height="30" class="d-inline-block align-top" alt="Image">
+                <img th:src="@{/assets/bank-icon.png}"
+                     width="30" height="30" class="d-inline-block align-top" alt="Image"> <span
+                    th:text="#{app.name}"></span>
             </a>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
@@ -31,14 +32,26 @@
                            data-toggle="dropdown"><span th:text="#{nav.clients}"></span>
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item"
-                               th:text="#{nav.clients.all}" th:href="@{/client}"></a>
+
+                            <!--Show all clients-->
+                            <a class="dropdown-item" th:href="@{/client}">
+                                <i class="fas fa-users"></i>
+                                <span th:text="#{nav.clients.all}"></span>
+                            </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item"
-                               th:text="#{nav.clients.edit}" th:href="@{'/client/edit/' + ${client.id}}"></a>
+
+                            <!--Edit client-->
+                            <a class="dropdown-item" th:href="@{'/client/edit/' + ${client.id}}">
+                                <i class="fas fa-user-edit"></i>
+                                <span th:text="#{nav.clients.edit}"></span>
+                            </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item"
-                               th:text="#{nav.clients.delete}" th:href="@{/client/delete}"></a>
+
+                            <!--Delete client-->
+                            <a class="dropdown-item text-danger" data-toggle="modal" data-target="#delete-client-modal">
+                                <i class="fas fa-user-times"></i>
+                                <span th:text="#{nav.clients.delete}"></span>
+                            </a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -60,7 +73,7 @@
                 <div class="col-12">
                     <div class="rounded-container smooth-shadow">
                         <div class="title-container">
-                            <i class="avatar fas fa-user-astronaut"></i>
+                            <i class="fas fa-user avatar"></i>
                             <h2>
                                 <span th:text="
                                     ${client.passport.lastName} + ' ' +
@@ -76,7 +89,7 @@
 
                                     <!--General-info-->
                                     <li class="nav-item">
-                                        <button id="btn-general-info" class="btn nav-link active"
+                                        <button id="btn-general-info" class="btn nav-link active scroll-top"
                                                 onclick="showGeneralInfo()">
                                             <span th:text="#{client.general.information}"></span>
                                         </button>
@@ -84,7 +97,7 @@
 
                                     <!--Contacts-->
                                     <li class="nav-item">
-                                        <button id="btn-contacts" class="btn nav-link"
+                                        <button id="btn-contacts" class="btn nav-link scroll-top"
                                                 onclick="showContactInfo()">
                                             <span th:text="#{client.contact.information}"></span>
                                         </button>
@@ -92,9 +105,17 @@
 
                                     <!--Personal-info-->
                                     <li class="nav-item">
-                                        <button id="btn-personal-info" class="btn nav-link"
+                                        <button id="btn-personal-info" class="btn nav-link scroll-top"
                                                 onclick="showPersonalInfo()">
                                             <span th:text="#{client.private.information}"></span>
+                                        </button>
+                                    </li>
+
+                                    <!--Client accounts-->
+                                    <li class="nav-item">
+                                        <button id="btn-client-accounts" class="btn nav-link scroll-top"
+                                                onclick="showClientAccounts()">
+                                            <span th:text="#{client.accounts}"></span>
                                         </button>
                                     </li>
 
@@ -108,8 +129,109 @@
                                 </ul>
                             </div>
 
+                            <!-- Modal delete client-->
+                            <div class="modal fade" id="delete-client-modal" tabindex="-1" role="dialog"
+                                 aria-labelledby="deleteClientModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title text-danger" id="deleteClientModalLabel">
+                                                <i class="fas fa-trash-alt"></i>
+                                                <span th:text="#{title.client.delete}"></span>
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <span th:text="#{txt.warning.delete.client}"></span>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                                <span th:text="#{btn.cancel}"></span>
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger"
+                                                    th:onclick="'deleteClient('+ ${client.id} +')'">
+                                                <span th:text="#{btn.delete}"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal create account-->
+                            <div class="modal fade" id="create-account-modal" tabindex="-1"
+                                 role="dialog"
+                                 aria-labelledby="deleteClientModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title text-success"
+                                                id="createAccountModalLabel">
+                                                <i class="fas fa-money-check-alt"></i>
+                                                <span th:text="#{title.account.create}"></span>
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <label for="select-currency"
+                                                           th:text="#{label.select.currency} + ':'"></label>
+                                                    <select id="select-currency" class="form-control">
+                                                        <th:block th:each="currency : ${currencies}">
+                                                            <option th:value="${currency.id}"
+                                                                    th:text="${currency.name}"></option>
+                                                        </th:block>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary"
+                                                    data-dismiss="modal">
+                                                <span th:text="#{btn.cancel}"></span>
+                                            </button>
+                                            <button type="button" class="btn btn-success"
+                                                    th:onclick="'saveAccount(' + ${client.id} + ')'">
+                                                <span th:text="#{btn.save}"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Error Modal -->
+                            <div class="modal fade" id="error-modal" tabindex="-1" role="dialog"
+                                 aria-labelledby="error-modal-label" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title text-danger" id="error-modal-label">
+                                                <i class="fas fa-exclamation-circle"></i>
+                                                <span id="error-modal-title" th:text="#{title.error.oops}"></span>
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <span id="error-modal-body"></span>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                                <span th:text="#{btn.close}"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!--General-info-->
-                            <div id="general-info" class="card-body">
+                            <div id="general-info" class="card-body card-info">
                                 <div class="user-info">
 
                                     <!--FIO-->
@@ -275,7 +397,7 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-8"></div>
                                         <div class="form-group col-md-4">
-                                            <button class="btn btn-primary float-right"
+                                            <button class="btn btn-primary float-right scroll-top"
                                                     onclick="showContactInfo()">
                                                 <span th:text="#{btn.next}"></span>
                                                 <i class="fas fa-arrow-right"></i>
@@ -286,7 +408,7 @@
                             </div>
 
                             <!--Contact info-->
-                            <div id="contact-info" class="card-body" style="display: none">
+                            <div id="contact-info" class="card-body card-info" style="display: none">
                                 <div class="user-info">
 
                                     <!--Living address-->
@@ -302,7 +424,7 @@
 
                                             <!--Country-->
                                             <div class="form-group col-md-6">
-                                                <label for="select-living-address-country"
+                                                <label for="select-currency"
                                                        th:text="#{placeholder.input.country} + ':'"></label>
                                                 <select id="select-living-address-country" class="form-control"
                                                         disabled>
@@ -437,7 +559,7 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-8"></div>
                                         <div class="form-group col-md-4">
-                                            <button class="btn btn-primary float-right"
+                                            <button class="btn btn-primary float-right scroll-top"
                                                     onclick="showPersonalInfo()">
                                                 <span th:text="#{btn.next}"></span>
                                                 <i class="fas fa-arrow-right"></i>
@@ -448,7 +570,7 @@
                             </div>
 
                             <!--Personal-info-->
-                            <div id="personal-info" class="card-body" style="display: none">
+                            <div id="personal-info" class="card-body card-info" style="display: none">
                                 <div class="user-info">
 
                                     <!--Passport-->
@@ -566,7 +688,9 @@
                                                        th:text="#{placeholder.input.country} + ':'"></label>
                                                 <select id="registration-country" class="form-control" disabled>
                                                     <option th:value="${client.passport.registration.address.country.iso3code}"
-                                                            th:text="${client.passport.registration.address.country.countryName}"></option>
+                                                            th:text="${client.passport.registration.address.country
+                                                            .countryName}">
+                                                    </option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-6">
@@ -692,6 +816,85 @@
                                 </div>
                             </div>
 
+                            <!--Client accounts-->
+                            <div id="client-accounts" class="card-body card-info" style="display: none">
+                                <div class="user-info">
+
+                                    <!--Table-->
+                                    <table class="table table-borderless table-hover">
+                                        <thead>
+                                            <tr>
+                                                <!--Create account-->
+                                                <th scope="col">
+                                                    <span class="hover-success action-icon" data-toggle="modal"
+                                                          data-target="#create-account-modal">
+                                                         <i class="fas fa-plus"></i>
+                                                    </span>
+                                                </th>
+                                                <th scope="col">#</th>
+                                                <th scope="col" th:text="#{account.date.of.currency}"></th>
+                                                <th scope="col" th:text="#{account.date.of.value}"></th>
+                                                <th scope="col" th:text="#{account.date.of.issue}"></th>
+                                                <th scope="col" th:text="#{account.date.of.expire}"></th>
+                                                <th scope="col" th:text="#{account.worker.id}"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <th:block th:each="account : ${accounts}">
+                                                <tr>
+                                                    <td>
+                                                        <span class="hover-danger action-icon" data-toggle="modal"
+                                                              data-target="#delete-account-modal">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </span>
+                                                    </td>
+                                                    <td th:text="${account.id}"></td>
+                                                    <td th:text="${account.currency.name}"></td>
+                                                    <td th:text="${account.value}"></td>
+                                                    <td th:text="${#dates.format(account.dateOfIssue,'dd.MM.yyyy HH:mm')}"></td>
+                                                    <td th:text="${#dates.format(account.dateOfExpire,'dd.MM.yyyy HH:mm')}"></td>
+                                                    <td th:text="${account.worker.id}"></td>
+                                                </tr>
+
+                                                <!-- Modal delete account-->
+                                                <div class="modal fade" id="delete-account-modal" tabindex="-1"
+                                                     role="dialog"
+                                                     aria-labelledby="deleteClientModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title text-danger"
+                                                                    id="deleteAccountModalLabel">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                    <span th:text="#{title.account.delete}"></span>
+                                                                </h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                        aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <span th:text="#{txt.warning.delete.account}"></span>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-primary"
+                                                                        data-dismiss="modal">
+                                                                    <span th:text="#{btn.cancel}"></span>
+                                                                </button>
+                                                                <button type="button" class="btn btn-outline-danger"
+                                                                        th:onclick="'deleteAccount(' + ${account.id} + ')'">
+                                                                    <span th:text="#{btn.delete}"></span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </th:block>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

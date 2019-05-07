@@ -14,59 +14,56 @@ const clientService = {
         return isValid;
     },
 
-    saveLivingAddressIfNotExist: function (address) {
+    getAddress: function(data, successCallback, errorCallback) {
         $.ajax({
             url: '/bank-system/api/address/findByCountryAndCityAndStreetAndBuildingNumberAndApartmentNumberAndPostCode',
-            type: 'POST',
-            data: JSON.stringify(address),
+            type: 'GET',
+            data: JSON.stringify(data),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             async: false,
-            success: function (response) {
-                livingAddress = response;
-            },
-            error: function () {
-                address.id = undefined;
-                return saveLivingAddress(address);
-            }
+            success: successCallback,
+            error: errorCallback,
         });
     },
 
-    saveRegistrationAddressIfNotExist: function (address) {
+    saveAddress: function(data, successCallback, errorCallback) {
         $.ajax({
-            url: '/bank-system/api/address/findByCountryAndCityAndStreetAndBuildingNumberAndApartmentNumberAndPostCode',
+            url: '/bank-system/api/address',
             type: 'POST',
-            data: JSON.stringify(address),
+            data: JSON.stringify(data),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             async: false,
-            success: function (response) {
-                registrationAddress = response;
-            },
-            error: function () {
-                address.id = undefined;
-                return saveRegistrationAddress(address);
-            }
+            success: successCallback,
+            error: errorCallback
         });
     },
 
-    saveRegistrationIfNotExist: function (data) {
+    getRegistration: function(data, successCallback, errorCallback) {
         $.ajax({
             url: '/bank-system/api/registration/' + data.id,
             type: 'GET',
             async: false,
-            success: function (response) {
-                console.log(response);
-                registration = response;
-            },
-            error: function (response) {
-                console.error(response);
-                saveRegistration(data);
-            }
+            success: successCallback,
+            error: errorCallback,
         });
     },
 
-    savePassport: function(data) {
+    saveRegistration: function(data, successCallback, errorCallback) {
+        $.ajax({
+            url: '/bank-system/api/registration',
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            async: false,
+            success: successCallback,
+            error: errorCallback,
+        });
+    },
+
+    savePassport: function(data, successCallback, errorCallback) {
         $.ajax({
             url: '/bank-system/api/passport',
             type: 'POST',
@@ -74,39 +71,12 @@ const clientService = {
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             async: false,
-            success: function (response) {
-                passport = response;
-            },
-            error: function (response) {
-                console.error(response);
-                isContinue = false;
-                alert(response.responseJSON.message)
-            }
+            success: successCallback,
+            error: errorCallback,
         });
     },
 
-    saveClient: function(data) {
-        $.ajax({
-            url: '/bank-system/api/client',
-            type: 'POST',
-            data: JSON.stringify(data),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            async: false,
-            success: function (response) {
-                client = response;
-                isContinue = true;
-                alert('Client saved.')
-            },
-            error: function (response) {
-                console.error(response);
-                isContinue = false;
-            }
-        });
-    },
-
-    checkIsEmailValid: function (data) {
-        let isSuccess = false;
+    checkIsEmailValid: function (data, successCallback, errorCallback) {
         $.ajax({
             url: '/bank-system/api/client/checkIsEmailValid',
             type: 'POST',
@@ -114,22 +84,12 @@ const clientService = {
                 'email' : data.email
             },
             async: false,
-            success: function (response) {
-                isSuccess = true;
-                console.log(response);
-
-            },
-            error: function (response) {
-                isSuccess = false;
-                console.error(response);
-                alert(response.responseJSON.message);
-            }
+            success: successCallback,
+            error: errorCallback,
         });
-        return isSuccess;
     },
 
-    checkIsMobilePhoneNumberValid: function (data) {
-        let isSuccess = false;
+    checkIsMobilePhoneNumberValid: function (data, successCallback, errorCallback) {
         $.ajax({
             url: '/bank-system/api/client/checkIsMobilePhoneNumberValid',
             type: 'POST',
@@ -137,22 +97,12 @@ const clientService = {
                 'mobilePhoneNumber' : data.mobilePhoneNumber
             },
             async: false,
-            success: function (response) {
-                isSuccess = true;
-                console.log(response);
-
-            },
-            error: function (response) {
-                isSuccess = false;
-                console.error(response);
-                alert(response.responseJSON.message);
-            }
+            success: successCallback,
+            error: errorCallback,
         });
-        return isSuccess;
     },
 
-    checkIsPassportIdValid: function (data) {
-        let isSuccess = false;
+    checkIsPassportIdValid: function (data, successCallback, errorCallback) {
         $.ajax({
             url: '/bank-system/api/passport/checkIsPassportIdValid',
             type: 'POST',
@@ -160,22 +110,12 @@ const clientService = {
                 'passportId' : data.passportId
             },
             async: false,
-            success: function (response) {
-                isSuccess = true;
-                console.log(response);
-
-            },
-            error: function (response) {
-                isSuccess = false;
-                console.error(response);
-                alert(response.responseJSON.message);
-            }
+            success: successCallback,
+            error: errorCallback,
         });
-        return isSuccess;
     },
 
-    checkIsPassportNumberValid: function (data) {
-        let isSuccess = false;
+    checkIsPassportNumberValid: function (data, successCallback, errorCallback) {
         $.ajax({
             url: '/bank-system/api/passport/checkIsPassportNumberValid',
             type: 'POST',
@@ -183,94 +123,89 @@ const clientService = {
                 'passportNumber' : data.passportNumber
             },
             async: false,
-            success: function (response) {
-                isSuccess = true;
-                console.log(response);
-
-            },
-            error: function (response) {
-                isSuccess = false;
-                console.error(response);
-                alert(response.responseJSON.message);
-            }
+            success: successCallback,
+            error: errorCallback,
         });
-        return isSuccess;
     },
 
     removeSpecialSymbolsFromPhoneNumber: function(phoneNumber) {
         let value = phoneNumber.trim();
 
-        value = removeSymbolRecursively(value, '+');
-        value = removeSymbolRecursively(value, '-');
-        value = removeSymbolRecursively(value, ' ');
+        value = main.removeSymbolRecursively(value, '+');
+        value = main.removeSymbolRecursively(value, '-');
+        value = main.removeSymbolRecursively(value, ' ');
 
         return value;
-    }
+    },
 
-};
+    getClient: function(data, successCallback, errorCallback) {
+        $.ajax({
+            url: '/bank-system/api/client/' + data.id,
+            type: 'GET',
+            async: false,
+            success: successCallback,
+            error: errorCallback,
+        });
+    },
 
-let removeSymbolRecursively = function(string, symbol){
-    if (string.includes(symbol)) {
-        string = string.replace(symbol, '');
-        return removeSymbolRecursively(string, symbol);
-    }
-    return string;
-};
+    saveClient: function(data, successCallback, errorCallback) {
+        $.ajax({
+            url: '/bank-system/api/client',
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            async: false,
+            success: successCallback,
+            error: errorCallback,
+        });
+    },
 
-let saveLivingAddress = function (address) {
-    $.ajax({
-        url: '/bank-system/api/address',
-        type: 'POST',
-        data: JSON.stringify(address),
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        async: false,
-        success: function (response) {
-            livingAddress = response;
-            isContinue = true
-        },
-        error: function (response) {
-            isContinue = false;
-            console.error(response)
-        }
-    });
-};
+    updateClient: function(data, successCallback, errorCallback) {
+        $.ajax({
+            url: '/bank-system/api/client/' + client.id,
+            type: 'PUT',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            async: false,
+            success: successCallback,
+            error: errorCallback,
+        });
+    },
 
-let saveRegistrationAddress = function (address) {
-    $.ajax({
-        url: '/bank-system/api/address',
-        type: 'POST',
-        data: JSON.stringify(address),
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        async: false,
-        success: function (response) {
-            registrationAddress = response;
-            isContinue = true
-        },
-        error: function (response) {
-            isContinue = false;
-            console.error(response)
-        }
-    });
-};
+    deleteClient: function(id, successCallback, errorCallback) {
+        $.ajax({
+            url: '/bank-system/api/client/' + id,
+            type: 'DELETE',
+            async: false,
+            success: successCallback,
+            error: errorCallback,
+        });
+    },
 
-let saveRegistration = function (data) {
-    $.ajax({
-        url: '/bank-system/api/registration',
-        type: 'POST',
-        data: JSON.stringify(data),
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        async: false,
-        success: function (response) {
-            console.log(response);
-            registration = response;
-        },
-        error: function (response) {
-            console.error(response);
-            isContinue = false;
-        }
-    });
+    saveAccount: function (data, successCallback, errorCallback) {
+        $.ajax({
+            url: '/bank-system/api/account',
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            async: false,
+            success: successCallback,
+            error: errorCallback,
+        });
+    },
+
+    deleteAccount: function(id, successCallback, errorCallback) {
+        $.ajax({
+            url: '/bank-system/api/account/' + id,
+            type: 'DELETE',
+            async: false,
+            success: successCallback,
+            error: errorCallback,
+        });
+    },
+
 };
 

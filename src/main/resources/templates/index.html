@@ -12,11 +12,12 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     </head>
-    <body class="bg-navy">
+    <body class="bg-gradient">
         <header class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <a class="navbar-brand scroll-top">
-                <img src="https://belgazprombank.by/uploads/userfiles/images/logorus.png"
-                      height="30" class="d-inline-block align-top" alt="Image">
+                <img th:src="@{/assets/bank-icon.png}"
+                     width="30" height="30" class="d-inline-block align-top" alt="Image"> <span
+                    th:text="#{app.name}"></span>
             </a>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
@@ -40,6 +41,13 @@
                     </li>
                 </ul>
             </div>
+            <div class="logout">
+                <a th:href="#{link.github}" target="_blank">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+            </div>
+
         </header>
         <div class="container-fluid">
             <div class="row row-center">
@@ -57,11 +65,15 @@
                                     <p class="mb-0" th:text="#{txt.blockquote}"></p>
                                     <footer class="blockquote-footer" th:text="#{txt.blockquote.author}"></footer>
                                 </blockquote>
-                                <div>
-                                    <a th:href="@{/worker/logIn}" role="button"
-                                       class="btn-custom btn btn-success">
-                                        <span th:text="#{btn.login}"></span>
-                                    </a>
+                                <!--Next-->
+                                <div class="form-row">
+                                    <div class="form-group col-md-8"></div>
+                                    <div class="form-group col-md-4">
+                                        <a th:href="@{/worker/logIn}" role="button"
+                                           class="btn-custom btn btn-success float-right">
+                                            <span th:text="#{btn.login}"></span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -1,24 +1,24 @@
-package com.kovalevich.banksystembgpb.controllers.address
+package com.kovalevich.banksystembgpb.controllers.account
 
-import com.kovalevich.banksystembgpb.models.address.Address
-import com.kovalevich.banksystembgpb.services.address.AddressService
+
+import com.kovalevich.banksystembgpb.services.account.CurrencyService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 
-@RestController
-@RequestMapping(value = '/api/address')
-class AddressRestController {
+@RestController(value = 'CurrencyRestController')
+@RequestMapping(value = '/api/currency')
+class CurrencyRestController {
 
     @Autowired
-    AddressService addressService
+    CurrencyService currencyService
 
     @GetMapping
     def findAll() {
         try {
-            return addressService.findAll()
+            return currencyService.findAll()
 
         } catch (RuntimeException e) {
             e.printStackTrace()
@@ -29,7 +29,18 @@ class AddressRestController {
     @GetMapping(value = '/{id}')
     def findById(@PathVariable long id) {
         try {
-            return addressService.findById(id)
+            return currencyService.findById(id)
+
+        } catch (RuntimeException e) {
+            e.printStackTrace()
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage())
+        }
+    }
+
+    @GetMapping(value = '/byName/{name}')
+    def findByName(@PathVariable String name) {
+        try {
+            return currencyService.findByName(name)
 
         } catch (RuntimeException e) {
             e.printStackTrace()
@@ -38,9 +49,9 @@ class AddressRestController {
     }
 
     @PostMapping
-    def create(@RequestBody Address address) {
+    def create(@RequestBody Currency currency) {
         try {
-            return addressService.save(address)
+            return currencyService.save(currency)
 
         } catch (RuntimeException e) {
             e.printStackTrace()
@@ -49,9 +60,9 @@ class AddressRestController {
     }
 
     @PutMapping(value = '/{id}')
-    def update(@PathVariable long id, @RequestBody Address address) {
+    def update(@PathVariable long id, @RequestBody Currency currency) {
         try {
-            return addressService.update(id, address)
+            return currencyService.update(id, currency)
 
         } catch (RuntimeException e) {
             e.printStackTrace()
@@ -62,7 +73,7 @@ class AddressRestController {
     @DeleteMapping(value = '/{id}')
     def delete(@PathVariable long id) {
         try {
-            addressService.delete(id)
+            currencyService.delete(id)
             return ResponseEntity.ok().build()
 
         } catch (RuntimeException e) {
@@ -70,17 +81,4 @@ class AddressRestController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage())
         }
     }
-
-    @PostMapping(value = 'findByCountryAndCityAndStreetAndBuildingNumberAndApartmentNumberAndPostCode')
-    def findAllByCountryAndCityAndBuildingNumber(@RequestBody Address address) {
-        try {
-            return addressService.findByCountryAndCityAndStreetAndBuildingNumberAndApartmentNumberAndPostCode(address.country,
-                    address.city, address.street, address.buildingNumber, address.apartmentNumber, address.postCode)
-
-        } catch (RuntimeException e) {
-            e.printStackTrace()
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage())
-        }
-    }
-
 }

@@ -1,6 +1,5 @@
 package com.kovalevich.banksystembgpb.services.security
 
-
 import com.kovalevich.banksystembgpb.models.worker.Worker
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service

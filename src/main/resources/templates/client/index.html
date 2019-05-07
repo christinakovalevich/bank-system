@@ -12,11 +12,12 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     </head>
-    <body class="bg-navy">
+    <body class="bg-blue">
         <header class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand scroll-top">
-                <img src="https://belgazprombank.by/uploads/userfiles/images/logorus.png"
-                      height="30" class="d-inline-block align-top" alt="Image">
+                <img th:src="@{/assets/bank-icon.png}"
+                     width="30" height="30" class="d-inline-block align-top" alt="Image"> <span
+                    th:text="#{app.name}"></span>
             </a>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
@@ -37,8 +38,10 @@
                            data-toggle="dropdown"><span th:text="#{nav.clients}"></span>
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item"
-                               th:text="#{nav.clients.create}" th:href="@{/client/create}"></a>
+                            <a class="dropdown-item" th:href="@{/client/create}">
+                                <i class="fas fa-user-plus"></i>
+                                <span th:text="#{nav.clients.create}"></span>
+                            </a>
                         </div>
                     </li>
 
@@ -109,8 +112,11 @@
                                                 'dd.MM.yyyy')}"></td>
                                                 <td th:text="${client.passport.citizenship.countryName}"></td>
                                                 <td th:text="${client.passport.id}"></td>
-                                                <td><a th:href="@{'/client/' + ${client.id}}">
-                                                    <i class="fas fa-chevron-right"></i></a></td>
+                                                <td class="action-icon">
+                                                    <a th:href="@{'/client/' + ${client.id}}">
+                                                        <i class="fas fa-chevron-right"></i>
+                                                    </a>
+                                                </td>
                                             </tr>
                                         </th:block>
                                     </tbody>

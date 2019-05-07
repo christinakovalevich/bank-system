@@ -1,6 +1,8 @@
 package com.kovalevich.banksystembgpb.controllers.client
 
 import com.kovalevich.banksystembgpb.exceptions.worker.WorkerNotAuthorizedException
+import com.kovalevich.banksystembgpb.services.account.AccountService
+import com.kovalevich.banksystembgpb.services.account.CurrencyService
 import com.kovalevich.banksystembgpb.services.client.ClientService
 import com.kovalevich.banksystembgpb.services.country.CountryService
 import com.kovalevich.banksystembgpb.services.worker.WorkerService
@@ -25,12 +27,18 @@ class ClientController {
     @Autowired
     CountryService countryService
 
+    @Autowired
+    AccountService accountService
+
+    @Autowired
+    CurrencyService currencyService
+
     @RequestMapping
     def index(Model model) {
         try {
             workerService.checkAuthorization()
-            def clients = clientService.findAll() as Set
-            model.addAttribute("clients", clients)
+            def clients = clientService.findAll()
+            model.addAttribute('clients', clients)
 
         } catch (WorkerNotAuthorizedException e) {
             e.printStackTrace()
@@ -44,7 +52,11 @@ class ClientController {
         try {
             workerService.checkAuthorization()
             def client = clientService.findById(id)
-            model.addAttribute("client", client)
+            def accounts = accountService.findAllByClient(client)
+            def currencies = currencyService.findAll()
+            model.addAttribute('client', client)
+            model.addAttribute('accounts', accounts)
+            model.addAttribute('currencies', currencies)
 
         } catch (WorkerNotAuthorizedException e) {
             e.printStackTrace()
@@ -57,8 +69,8 @@ class ClientController {
     def create(Model model) {
         try {
             workerService.checkAuthorization()
-            def countries = countryService.findAll() as Set
-            model.addAttribute("countries", countries)
+            def countries = countryService.findAll()
+            model.addAttribute('countries', countries)
 
         } catch (WorkerNotAuthorizedException e) {
             e.printStackTrace()
@@ -72,7 +84,7 @@ class ClientController {
         try {
             workerService.checkAuthorization()
             def client = clientService.findById(id)
-            model.addAttribute("client", client)
+            model.addAttribute('client', client)
 
         } catch (WorkerNotAuthorizedException e) {
             e.printStackTrace()

@@ -1,6 +1,5 @@
 package com.kovalevich.banksystembgpb.models.address
 
-
 import com.kovalevich.banksystembgpb.models.client.Client
 import com.kovalevich.banksystembgpb.models.country.Country
 import com.kovalevich.banksystembgpb.models.registration.Registration

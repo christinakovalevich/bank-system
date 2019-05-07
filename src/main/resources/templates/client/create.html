@@ -12,11 +12,12 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     </head>
-    <body class="bg-navy">
+    <body class="bg-blue">
         <header class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand scroll-top">
-                <img src="https://belgazprombank.by/uploads/userfiles/images/logorus.png"
-                      height="30" class="d-inline-block align-top" alt="Image">
+                <img th:src="@{/assets/bank-icon.png}"
+                     width="30" height="30" class="d-inline-block align-top" alt="Image"> <span
+                    th:text="#{app.name}"></span>
             </a>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
@@ -92,8 +93,34 @@
                                 </ul>
                             </div>
 
+                            <!--Error Modal -->
+                            <div class="modal fade" id="error-modal" tabindex="-1" role="dialog"
+                                 aria-labelledby="error-modal-label" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title text-danger" id="error-modal-label">
+                                                <i class="fas fa-exclamation-circle"></i>
+                                                <span id="error-modal-title" th:text="#{title.error.oops}"></span>
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <span id="error-modal-body"></span>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                                <span th:text="#{btn.close}"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!--General-info-->
-                            <div id="general-info" class="card-body">
+                            <div id="general-info" class="card-body card-info">
                                 <div class="user-info">
 
                                     <!--FIO-->
@@ -172,11 +199,11 @@
                                                 <br>
                                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                                     <label class="btn btn-outline-secondary btn-sm">
-                                                        <input type="radio" name="gender" value="true"
+                                                        <input type="radio" name="gender"
                                                                checked> <span th:text="#{passport.gender.male}"></span>
                                                     </label>
                                                     <label class="btn btn-outline-secondary btn-sm">
-                                                        <input type="radio" name="gender" value="false">
+                                                        <input type="radio" name="gender">
                                                         <span th:text="#{passport.gender.female}"></span>
                                                     </label>
                                                 </div>
@@ -216,7 +243,8 @@
                                             <div class="form-group col-md-4">
                                                 <label for="txt-income-per-mouth"
                                                        th:text="#{label.income.per.month} + ':'"></label>
-                                                <input type="number" class="form-control numbers-to-validate" id="txt-income-per-mouth"
+                                                <input type="number" class="form-control numbers-to-validate"
+                                                       id="txt-income-per-mouth"
                                                        th:placeholder="#{placeholder.income.byn}"/>
                                             </div>
                                         </div>
@@ -226,8 +254,8 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-8"></div>
                                         <div class="form-group col-md-4">
-                                            <button class="btn btn-primary float-right"
-                                                    onclick="validateGeneralInfo(); saveGeneralInfo()">
+                                            <button class="btn btn-primary float-right scroll-top"
+                                                    onclick="saveGeneralInfo()">
                                                 <span th:text="#{btn.next}"></span>
                                                 <i class="fas fa-arrow-right"></i>
                                             </button>
@@ -237,7 +265,7 @@
                             </div>
 
                             <!--Contact info-->
-                            <div id="contact-info" class="card-body" style="display: none">
+                            <div id="contact-info" class="card-body card-info" style="display: none">
                                 <div class="user-info">
 
                                     <!--Living address-->
@@ -371,8 +399,8 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-8"></div>
                                         <div class="form-group col-md-4">
-                                            <button class="btn btn-primary float-right"
-                                                    onclick="validateContactInfo(); saveContactInfo()">
+                                            <button class="btn btn-primary float-right scroll-top"
+                                                    onclick="saveContactInfo()">
                                                 <span th:text="#{btn.next}"></span>
                                                 <i class="fas fa-arrow-right"></i>
                                             </button>
@@ -382,7 +410,7 @@
                             </div>
 
                             <!--Personal-info-->
-                            <div id="personal-info" class="card-body" style="display: none">
+                            <div id="personal-info" class="card-body card-info" style="display: none">
                                 <div class="user-info">
 
                                     <!--Passport-->
@@ -598,8 +626,8 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-8"></div>
                                         <div class="form-group col-md-4">
-                                            <button class="btn btn-lg btn-success float-right"
-                                                    onclick="validatePersonalInfo(); savePersonalInfo(); saveClient()">
+                                            <button class="btn btn-lg btn-success float-right scroll-top"
+                                                    onclick="savePersonalInfo(); saveClient()">
                                                 <i class="fas fa-save"></i>
                                                 <span th:text="#{btn.save}"></span>
                                             </button>
