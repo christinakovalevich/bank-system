@@ -12,21 +12,17 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     </head>
-    <body class="bg-blue">
-        <header class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+    <body class="bg-secondary">
+        <header class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <a class="navbar-brand scroll-top">
-                <img th:src="@{/assets/bank-icon.png}"
-                     width="30" height="30" class="d-inline-block align-top" alt="Image"> <span
-                    th:text="#{app.name}"></span>
+                <img src="https://belgazprombank.by/uploads/userfiles/images/logorus.png" height="35" alt="">
             </a>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/}"><span th:text="#{nav.home}"></span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/worker/profile}"><span th:text="#{nav.profile}"></span></a>
-                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link active scroll-top" th:href="@{/client}">
                             <span th:text="#{nav.clients}"></span>
@@ -36,14 +32,7 @@
                         <a class="nav-link" th:href="@{/operations}"><span th:text="#{nav.actions}"></span></a>
                     </li>
                 </ul>
-                <div class="logout">
-                    <form class="form-inline my-2 my-lg-0" th:action="@{/worker/logOut}">
-                        <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">
-                            <i class="fas fa-sign-out-alt"></i>
-                            <span th:text="#{btn.logout}"></span>
-                        </button>
-                    </form>
-                </div>
+
             </div>
         </header>
         <div class="container-fluid">
@@ -674,7 +663,7 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-8"></div>
                                         <div class="form-group col-md-4">
-                                            <button class="btn btn-lg btn-success float-right"
+                                            <button class="btn btn-lg btn-primary float-right"
                                                     onclick="validatePersonalInfo(); savePersonalInfo(); updateClient()">
                                                 <i class="fas fa-save"></i>
                                                 <span th:text="#{btn.save}"></span>

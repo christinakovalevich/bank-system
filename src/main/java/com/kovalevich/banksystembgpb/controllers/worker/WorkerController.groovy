@@ -44,7 +44,7 @@ class WorkerController {
     def authenticate(@RequestParam String username, @RequestParam String password) {
         try {
             workerService.findByUsernameAndPassword(username, password)
-            return 'redirect:/worker/profile'
+            return 'redirect:/client'
         } catch (ResourceNotFoundException e) {
             e.printStackTrace()
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.localizedMessage)

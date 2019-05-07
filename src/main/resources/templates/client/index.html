@@ -12,12 +12,10 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     </head>
-    <body class="bg-blue">
-        <header class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+    <body class="bg-secondary">
+        <header class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <a class="navbar-brand scroll-top">
-                <img th:src="@{/assets/bank-icon.png}"
-                     width="30" height="30" class="d-inline-block align-top" alt="Image"> <span
-                    th:text="#{app.name}"></span>
+                <img src="https://belgazprombank.by/uploads/userfiles/images/logorus.png" height="35" alt="">
             </a>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
@@ -25,11 +23,6 @@
                     <!--Home-->
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/}"><span th:text="#{nav.home}"></span></a>
-                    </li>
-
-                    <!--Profile-->
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/worker/profile}"><span th:text="#{nav.profile}"></span></a>
                     </li>
 
                     <!--Client-->
@@ -51,19 +44,6 @@
                     </li>
                 </ul>
 
-                <!--Search-->
-                <div class="logout">
-                    <div class="form-inline my-2 my-lg-0">
-                        <input id="idPassport" name="idPassport" class="form-control mr-sm-2" type="search"
-                               th:placeholder="#{placeholder.input.id} + ':'"
-                               aria-label="Search" oninput="findClientById()">
-                        <button class="btn btn-outline-success my-2 my-sm-0"
-                                onclick="openClient()">
-                            <span><i class="fas fa-search-dollar"></i></span>
-                            <span th:text="#{btn.search}"></span>
-                        </button>
-                    </div>
-                </div>
             </div>
         </header>
         <div class="container-fluid">
@@ -73,18 +53,14 @@
 
                         <!--Title-->
                         <div class="title-container">
-                            <i class="avatar fas fa-users"></i>
-                            <h2>
-                                <span th:text="#{nav.clients} + ' '"></span>
-                                <span class="badge badge-success" th:text="#{app.name}"></span>
-                            </h2>
+                            <img src="https://belgazprombank.by/uploads/userfiles/images/logorus.png" alt="">
                         </div>
 
                         <div class="rounded-container smooth-shadow">
                             <div class="user-info">
 
                                 <!--Table-->
-                                <table class="table table-borderless table-hover">
+                                <table class="table table-striped table-hover">
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
@@ -95,7 +71,6 @@
                                             <th scope="col" th:text="#{passport.birth.date}"></th>
                                             <th scope="col" th:text="#{passport.country.name}"></th>
                                             <th scope="col" th:text="#{passport.id}"></th>
-                                            <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -112,11 +87,6 @@
                                                 'dd.MM.yyyy')}"></td>
                                                 <td th:text="${client.passport.citizenship.countryName}"></td>
                                                 <td th:text="${client.passport.id}"></td>
-                                                <td class="action-icon">
-                                                    <a th:href="@{'/client/' + ${client.id}}">
-                                                        <i class="fas fa-chevron-right"></i>
-                                                    </a>
-                                                </td>
                                             </tr>
                                         </th:block>
                                     </tbody>
