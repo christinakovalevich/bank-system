@@ -6,14 +6,14 @@
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title th:text="#{title.client.create}"></title>
-        <link rel="icon" th:href="@{/assets/favicon.ico}">
+        <link rel="icon" th:href="@{/assets/bank-icon.png}">
         <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
         <link rel="stylesheet" th:href="@{/css/main.css}">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     </head>
     <body class="bg-secondary">
-        <header class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <header class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand scroll-top">
                 <img src="https://belgazprombank.by/uploads/userfiles/images/logorus.png" height="35" alt="">
             </a>
@@ -25,32 +25,28 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/worker/profile}">
-                            <span th:text="#{nav.profile}"></span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link active scroll-top" th:href="@{/client}">
                             <span th:text="#{nav.clients}"></span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/operations}">
-                            <span th:text="#{nav.actions}"></span>
+                        <a class="nav-link" th:href="@{/operation}">
+                            <span th:text="#{nav.operation}"></span>
                         </a>
                     </li>
                 </ul>
             </div>
+
+
         </header>
         <div class="container-fluid">
             <div class="row row-center">
                 <div class="col-12">
                     <div class="rounded-container smooth-shadow">
                         <div class="title-container">
-                            <i class="avatar fas fa-user-plus"></i>
-                            <h2>
-                                <span th:text="#{title.client.create}"></span>
-                            </h2>
+                            <a class="navbar-brand scroll-top">
+                                <img src="https://belgazprombank.by/uploads/userfiles/images/logorus.png" alt="">
+                            </a>
                         </div>
                         <div class="card smooth-shadow">
                             <div class="card-header">
@@ -58,26 +54,26 @@
 
                                     <!--General-info-->
                                     <li class="nav-item">
-                                        <button id="btn-general-info" class="btn nav-link active"
-                                                onclick="showGeneralInfo()">
+                                        <a id="btn-general-info" class="nav-link active" href="#"
+                                           onclick="showGeneralInfo()">
                                             <span th:text="#{client.general.information}"></span>
-                                        </button>
+                                        </a>
                                     </li>
 
                                     <!--Contacts-->
                                     <li class="nav-item">
-                                        <button id="btn-contacts" class="btn nav-link"
-                                                onclick="showContactInfo()">
+                                        <a id="btn-contacts" class="nav-link" href="#"
+                                           onclick="showContactInfo()">
                                             <span th:text="#{client.contact.information}"></span>
-                                        </button>
+                                        </a>
                                     </li>
 
                                     <!--Personal-info-->
                                     <li class="nav-item">
-                                        <button id="btn-personal-info" class="btn nav-link"
-                                                onclick="showPersonalInfo()">
+                                        <a id="btn-personal-info" class="nav-link" href="#"
+                                           onclick="showPersonalInfo()">
                                             <span th:text="#{client.private.information}"></span>
-                                        </button>
+                                        </a>
                                     </li>
 
                                 </ul>
@@ -240,15 +236,16 @@
                                         </div>
                                     </section>
 
-                                    <!--Next-->
+                                    <!--Buttons-->
                                     <div class="form-row">
                                         <div class="form-group col-md-8"></div>
                                         <div class="form-group col-md-4">
-                                            <button class="btn btn-primary float-right scroll-top"
-                                                    onclick="saveGeneralInfo()">
+                                            <a class="btn btn-primary btn-custom float-right"
+                                               href="#"
+                                               onclick="saveGeneralInfo()">
                                                 <span th:text="#{btn.next}"></span>
                                                 <i class="fas fa-arrow-right"></i>
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -385,15 +382,23 @@
                                         </div>
                                     </section>
 
-                                    <!--Next-->
+                                    <!--Buttons-->
                                     <div class="form-row">
-                                        <div class="form-group col-md-8"></div>
-                                        <div class="form-group col-md-4">
-                                            <button class="btn btn-primary float-right scroll-top"
-                                                    onclick="saveContactInfo()">
+                                        <div class="form-group col-md-6">
+                                            <a class="btn btn-secondary btn-custom float-left"
+                                               href="#"
+                                               onclick="showGeneralInfo()">
+                                                <i class="fas fa-arrow-left"></i>
+                                                <span th:text="#{btn.back}"></span>
+                                            </a>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <a class="btn btn-primary btn-custom float-right"
+                                               href="#"
+                                               onclick="saveContactInfo()">
                                                 <span th:text="#{btn.next}"></span>
                                                 <i class="fas fa-arrow-right"></i>
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -612,15 +617,23 @@
                                         </div>
                                     </section>
 
-                                    <!--Next-->
+                                    <!--Buttons-->
                                     <div class="form-row">
-                                        <div class="form-group col-md-8"></div>
-                                        <div class="form-group col-md-4">
-                                            <button class="btn btn-lg btn-primary float-right scroll-top"
-                                                    onclick="savePersonalInfo(); saveClient()">
-                                                <i class="fas fa-save"></i>
-                                                <span th:text="#{btn.save}"></span>
-                                            </button>
+                                        <div class="form-group col-md-6">
+                                            <a class="btn btn-secondary btn-custom float-left"
+                                               href="#"
+                                               onclick="showContactInfo()">
+                                                <i class="fas fa-arrow-left"></i>
+                                                <span th:text="#{btn.back}"></span>
+                                            </a>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <a class="btn btn-primary btn-custom float-right"
+                                               href="#"
+                                               onclick="savePersonalInfo(); saveClient()">
+                                                <span th:text="#{btn.next}"></span>
+                                                <i class="fas fa-arrow-right"></i>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

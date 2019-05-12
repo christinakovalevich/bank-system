@@ -1,32 +1,35 @@
 package com.kovalevich.banksystembgpb.controllers.account
 
-import com.kovalevich.banksystembgpb.models.account.Account
-import com.kovalevich.banksystembgpb.services.account.abstraction.AccountService
+import com.kovalevich.banksystembgpb.models.account.AccountType
 import com.kovalevich.banksystembgpb.services.account.abstraction.AccountTypeService
-import com.kovalevich.banksystembgpb.services.account.abstraction.CurrencyService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 
-@RestController(value = 'AccountRestController')
-@RequestMapping(value = '/api/account')
-class AccountRestController {
-
-    @Autowired
-    AccountService accountService
+@RestController
+@RequestMapping(value = '/api/accountType')
+class AccountTypeRestController {
 
     @Autowired
     AccountTypeService accountTypeService
 
-    @Autowired
-    CurrencyService currencyService
+    @GetMapping
+    def findAll() {
+        try {
+            return accountTypeService.findAll()
+
+        } catch (RuntimeException e) {
+            e.printStackTrace()
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage())
+        }
+    }
 
     @GetMapping(value = '/{id}')
     def findById(@PathVariable long id) {
         try {
-            return accountService.findById(id)
+            return accountTypeService.findById(id)
 
         } catch (RuntimeException e) {
             e.printStackTrace()
@@ -34,32 +37,10 @@ class AccountRestController {
         }
     }
 
-    @GetMapping
-    def findAll() {
+    @GetMapping(value = '/byName/{name}')
+    def findByName(@PathVariable String name) {
         try {
-            return accountService.findAll()
-
-        } catch (RuntimeException e) {
-            e.printStackTrace()
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage())
-        }
-    }
-
-    @GetMapping(value = '/byAccountType/{id}')
-    def findAllByClient(@PathVariable long id) {
-        try {
-            return accountService.findAllByAccountType(accountTypeService.findById(id))
-
-        } catch (RuntimeException e) {
-            e.printStackTrace()
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage())
-        }
-    }
-
-    @GetMapping(value = '/byCurrency/{id}')
-    def findAllByCurrency(@PathVariable long id) {
-        try {
-            return accountService.findAllByCurrency(currencyService.findById(id))
+            return accountTypeService.findByName(name)
 
         } catch (RuntimeException e) {
             e.printStackTrace()
@@ -68,9 +49,9 @@ class AccountRestController {
     }
 
     @PostMapping
-    def create(@RequestBody Account account) {
+    def create(@RequestBody AccountType accountType) {
         try {
-            return accountService.save(account)
+            return accountTypeService.save(accountType)
 
         } catch (RuntimeException e) {
             e.printStackTrace()
@@ -79,9 +60,9 @@ class AccountRestController {
     }
 
     @PutMapping(value = '/{id}')
-    def update(@PathVariable long id, @RequestBody Account account) {
+    def update(@PathVariable long id, @RequestBody AccountType accountType) {
         try {
-            return accountService.update(id, account)
+            return accountTypeService.update(id, accountType)
 
         } catch (RuntimeException e) {
             e.printStackTrace()
@@ -92,7 +73,7 @@ class AccountRestController {
     @DeleteMapping(value = '/{id}')
     def delete(@PathVariable long id) {
         try {
-            accountService.delete(id)
+            accountTypeService.delete(id)
             return ResponseEntity.ok().build()
 
         } catch (RuntimeException e) {
@@ -100,4 +81,5 @@ class AccountRestController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage())
         }
     }
+
 }

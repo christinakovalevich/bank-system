@@ -1,7 +1,7 @@
 package com.kovalevich.banksystembgpb.controllers.account
 
 
-import com.kovalevich.banksystembgpb.services.account.CurrencyService
+import com.kovalevich.banksystembgpb.services.account.abstraction.CurrencyService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

@@ -1,7 +1,9 @@
+* {
+    scroll-behavior: smooth;
+}
 body {
     color: #333333;
     background: #fafafa;
-    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 header {
@@ -21,6 +23,10 @@ p {
 
 tbody tr {
     cursor: pointer;
+}
+
+tbody td {
+    /*text-align: right;*/
 }
 
 blockquote {
@@ -72,7 +78,7 @@ section {
     text-align: center;
     margin: 2% 0;
     padding: 3% 2%;
-    border-radius: .5rem;
+    border-radius: .2rem;
 }
 
 .rounded-container {
@@ -83,15 +89,13 @@ section {
 
 .table-container {
     padding: 1%;
-    border-radius: .5rem;
+    border-radius: .2rem;
 }
 
 .user-info {
     padding: 40px;
     border-radius: .2rem;
-    /*border: rgba(0,0,0,.125) 1px solid;*/
     background: #f8f9fa;
-    border: #cccccc solid 2px;
 }
 
 .row-center {
@@ -99,12 +103,12 @@ section {
 }
 
 .smooth-shadow {
-    /*box-shadow: 0 0 50px rgba(0,0,0,0.2);*/
+    box-shadow: 0 0 50px rgba(0,0,0,0.2);
 }
 
 .color {
     padding: 5px;
-    border-radius: .5rem;
+    border-radius: .2rem;
     width: 20%;
     text-align: center;
 }
@@ -133,30 +137,21 @@ section {
     color: #ffffff;
 }
 
-.info-value {
-    color: #686868;
-}
-
-.logout {
-    !important;
-    position: fixed;
-    right: 2%
-}
-
 .input {
     margin: 5% 0;
 }
 
-. {
+.btn-custom {
     width: 15vw;
 }
 
 .card {
     border: none;
+    border-radius: .2rem;
 }
 
 .form {
-    margin: 1.5rem;
+    margin: 1.2rem;
 }
 
 .error-code span {
@@ -173,7 +168,7 @@ section {
 .error-container {
     background: #fafafa;
     padding: 2%;
-    border-radius: .5rem;
+    border-radius: .2rem;
     text-align: center;
     margin-top: 5%;
 }

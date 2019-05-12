@@ -6,14 +6,14 @@
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title th:text="#{title.log.in}"></title>
-        <link rel="icon" th:href="@{/assets/favicon.ico}">
+        <link rel="icon" th:href="@{/assets/bank-icon.png}">
         <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
         <link rel="stylesheet" th:href="@{/css/main.css}">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     </head>
-    <body class="bg-secondary">>
-        <header class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <body class="bg-secondary">
+        <header class="navbar fixed-top navbar-expand-lg navbar-light bg-light smooth-shadow">
             <a class="navbar-brand scroll-top">
                 <img src="https://belgazprombank.by/uploads/userfiles/images/logorus.png" height="35" alt="">
             </a>
@@ -27,7 +27,7 @@
                         <a class="nav-link" th:href="@{/client}"><span th:text="#{nav.clients}"></span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/operations}"><span th:text="#{nav.actions}"></span></a>
+                        <a class="nav-link" th:href="@{/operation}"><span th:text="#{nav.operation}"></span></a>
                     </li>
                 </ul>
             </div>
@@ -54,7 +54,7 @@
                                        th:placeholder="#{worker.password} + ':'">
                             </div>
                             <div class="input">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-custom btn-success">
                                     <span th:text="#{btn.login}"></span>
                                 </button>
                             </div>

@@ -1,32 +1,32 @@
 package com.kovalevich.banksystembgpb.controllers.account
 
-import com.kovalevich.banksystembgpb.models.account.Account
-import com.kovalevich.banksystembgpb.services.account.abstraction.AccountService
-import com.kovalevich.banksystembgpb.services.account.abstraction.AccountTypeService
-import com.kovalevich.banksystembgpb.services.account.abstraction.CurrencyService
+import com.kovalevich.banksystembgpb.models.account.Contract
+import com.kovalevich.banksystembgpb.services.account.abstraction.ContractService
+import com.kovalevich.banksystembgpb.services.client.ClientService
+import com.kovalevich.banksystembgpb.services.worker.WorkerService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 
-@RestController(value = 'AccountRestController')
-@RequestMapping(value = '/api/account')
-class AccountRestController {
+@RestController
+@RequestMapping(value = '/api/contract')
+class ContractRestController {
 
     @Autowired
-    AccountService accountService
+    ContractService contractService
 
     @Autowired
-    AccountTypeService accountTypeService
+    WorkerService workerService
 
     @Autowired
-    CurrencyService currencyService
+    ClientService clientService
 
     @GetMapping(value = '/{id}')
     def findById(@PathVariable long id) {
         try {
-            return accountService.findById(id)
+            return contractService.findById(id)
 
         } catch (RuntimeException e) {
             e.printStackTrace()
@@ -37,7 +37,7 @@ class AccountRestController {
     @GetMapping
     def findAll() {
         try {
-            return accountService.findAll()
+            return contractService.findAll()
 
         } catch (RuntimeException e) {
             e.printStackTrace()
@@ -45,10 +45,10 @@ class AccountRestController {
         }
     }
 
-    @GetMapping(value = '/byAccountType/{id}')
+    @GetMapping(value = '/byClient/{id}')
     def findAllByClient(@PathVariable long id) {
         try {
-            return accountService.findAllByAccountType(accountTypeService.findById(id))
+            return contractService.findAllByClient(clientService.findById(id))
 
         } catch (RuntimeException e) {
             e.printStackTrace()
@@ -56,10 +56,10 @@ class AccountRestController {
         }
     }
 
-    @GetMapping(value = '/byCurrency/{id}')
-    def findAllByCurrency(@PathVariable long id) {
+    @GetMapping(value = '/byWorker/{id}')
+    def findAllByWorker(@PathVariable long id) {
         try {
-            return accountService.findAllByCurrency(currencyService.findById(id))
+            return contractService.findAllByWorker(workerService.findById(id))
 
         } catch (RuntimeException e) {
             e.printStackTrace()
@@ -68,9 +68,9 @@ class AccountRestController {
     }
 
     @PostMapping
-    def create(@RequestBody Account account) {
+    def create(@RequestBody Contract contract) {
         try {
-            return accountService.save(account)
+            return contractService.save(contract)
 
         } catch (RuntimeException e) {
             e.printStackTrace()
@@ -79,9 +79,9 @@ class AccountRestController {
     }
 
     @PutMapping(value = '/{id}')
-    def update(@PathVariable long id, @RequestBody Account account) {
+    def update(@PathVariable long id, @RequestBody Contract contract) {
         try {
-            return accountService.update(id, account)
+            return contractService.update(id, contract)
 
         } catch (RuntimeException e) {
             e.printStackTrace()
@@ -92,7 +92,7 @@ class AccountRestController {
     @DeleteMapping(value = '/{id}')
     def delete(@PathVariable long id) {
         try {
-            accountService.delete(id)
+            contractService.delete(id)
             return ResponseEntity.ok().build()
 
         } catch (RuntimeException e) {

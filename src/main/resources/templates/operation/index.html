@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title th:text="#{title.operation}"></title>
+        <link rel="icon" th:href="@{/assets/bank-icon.png}">
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{/css/main.css}">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    </head>
+    <body class="bg-secondary">
+
+        <!--Header-->
+        <header class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <a class="navbar-brand scroll-top">
+                <img src="https://belgazprombank.by/uploads/userfiles/images/logorus.png" height="35" alt="">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}">
+                            <span th:text="#{nav.home}"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/client}">
+                            <span th:text="#{nav.clients}"></span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link active dropdown-toggle scroll-top" role="button"
+                           data-toggle="dropdown"><span th:text="#{nav.operation}"></span>
+                        </a>
+                        <div class="dropdown-menu">
+
+                            <!--Show all deposits-->
+                            <a class="dropdown-item" th:href="@{/operation/deposit}">
+                                <span th:text="#{title.operation.deposit}"></span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+
+                            <!--Edit client-->
+                            <a class="dropdown-item" th:href="@{/operation/credit}">
+                                <span th:text="#{title.operation.credit}"></span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </header>
+
+        <!--Container-->
+        <div class="container-fluid">
+            <div class="row row-center">
+                <div class="col-12">
+                    <div class="rounded-container smooth-shadow">
+                        <div class="title-container">
+                            <a class="navbar-brand scroll-top">
+                                <img src="https://belgazprombank.by/uploads/userfiles/images/logorus.png" alt="">
+                            </a>
+                        </div>
+                        <div class="user-info">
+                            <div class="form-row">
+                                <div class="col-md-4" style="padding: 0 2.5vw">
+                                    <div class="card smooth-shadow" style="max-width: 25vw;">
+                                        <img src="https://images.unsplash.com/photo-1494488180300-4c634d1b2124?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2689&q=80" height="200"
+                                             class="card-img-top" alt="">
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <span th:text="#{operation.deposits}"></span>
+                                            </h5>
+                                            <p class="card-text small" style="min-height: 7vw"
+                                               th:text="#{txt.card.deposit.body}"></p>
+                                            <a th:href="@{/operation/deposit}" class="btn btn-primary w-100">
+                                                <span th:text="#{btn.go}"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="padding: 0 2.5vw">
+                                    <div class="card smooth-shadow" style="max-width: 25vw;">
+                                        <img src="https://images.unsplash.com/photo-1500731250117-4b0cbb8b276a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1862&q=80" height="200"
+                                             class="card-img-top" alt="">
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <span th:text="#{operation.credits}"></span>
+                                            </h5>
+                                            <p class="card-text small" style="min-height: 7vw"
+                                               th:text="#{txt.card.credit.body}"></p>
+                                            <a th:href="@{/operation/credit}" class="btn btn-primary w-100">
+                                                <span th:text="#{btn.go}"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="padding: 0 2.5vw">
+                                    <div class="card smooth-shadow" style="max-width: 25vw;">
+                                        <img src="https://images.unsplash.com/photo-1454111079122-eb76eb2d5754?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2689&q=80" height="200"
+                                             class="card-img-top" alt="">
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <span th:text="#{operation.close.bank.day}"></span>
+                                            </h5>
+                                            <p class="card-text small" style="min-height: 7vw"
+                                               th:text="#{txt.card.close.bank.day.body}"></p>
+                                            <a th:href="@{/operation/closeBankDay}" class="btn btn-primary w-100">
+                                                <span th:text="#{btn.submit}"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script th:src="@{/js/jquery-3.3.1.js}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                crossorigin="anonymous"></script>
+        <script th:src="@{/js/main.js}"></script>
+        <script th:src="@{/js/operation/operationService.js}"></script>
+        <script th:src="@{/js/operation/operationController.js}"></script>
+    </body>
+</html>

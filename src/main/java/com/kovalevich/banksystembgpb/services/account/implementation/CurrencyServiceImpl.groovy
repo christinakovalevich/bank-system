@@ -1,10 +1,10 @@
-package com.kovalevich.banksystembgpb.services.account
+package com.kovalevich.banksystembgpb.services.account.implementation
 
 import com.kovalevich.banksystembgpb.exceptions.ResourceAlreadyExistsException
 import com.kovalevich.banksystembgpb.exceptions.ResourceNotFoundException
 import com.kovalevich.banksystembgpb.exceptions.ResourceNotValidException
-import com.kovalevich.banksystembgpb.models.account.Currency
 import com.kovalevich.banksystembgpb.repositories.account.CurrencyRepository
+import com.kovalevich.banksystembgpb.services.account.abstraction.CurrencyService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 

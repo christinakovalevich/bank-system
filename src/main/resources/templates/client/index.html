@@ -6,14 +6,14 @@
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title th:text="#{title.client.index}"></title>
-        <link rel="icon" th:href="@{/assets/favicon.ico}">
+        <link rel="icon" th:href="@{/assets/bank-icon.png}">
         <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
         <link rel="stylesheet" th:href="@{/css/main.css}">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     </head>
     <body class="bg-secondary">
-        <header class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <header class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand scroll-top">
                 <img src="https://belgazprombank.by/uploads/userfiles/images/logorus.png" height="35" alt="">
             </a>
@@ -40,11 +40,21 @@
 
                     <!--Operation-->
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/operations}"><span th:text="#{nav.actions}"></span></a>
+                        <a class="nav-link" th:href="@{/operation}"><span th:text="#{nav.operation}"></span></a>
                     </li>
                 </ul>
-
             </div>
+
+            <!--Search-->
+            <div>
+                <div class="form-inline my-2 my-lg-0">
+                    <input id="idPassport" name="idPassport" class="form-control mr-sm-2" type="search"
+                           th:placeholder="#{placeholder.input.id} + ':'"
+                           aria-label="Search" oninput="findClientById()">
+
+                </div>
+            </div>
+
         </header>
         <div class="container-fluid">
             <div class="row row-center">
@@ -53,16 +63,19 @@
 
                         <!--Title-->
                         <div class="title-container">
-                            <img src="https://belgazprombank.by/uploads/userfiles/images/logorus.png" alt="">
+                            <a class="navbar-brand scroll-top">
+                                <img src="https://belgazprombank.by/uploads/userfiles/images/logorus.png" alt="">
+                            </a>
                         </div>
 
                         <div class="rounded-container smooth-shadow">
                             <div class="user-info">
 
                                 <!--Table-->
-                                <table class="table table-striped table-hover">
+                                <table class="table table-striped  table-hover">
                                     <thead>
                                         <tr>
+
                                             <th scope="col">#</th>
                                             <th scope="col" th:text="#{passport.last.name}"></th>
                                             <th scope="col" th:text="#{passport.first.name}"></th>
@@ -71,6 +84,12 @@
                                             <th scope="col" th:text="#{passport.birth.date}"></th>
                                             <th scope="col" th:text="#{passport.country.name}"></th>
                                             <th scope="col" th:text="#{passport.id}"></th>
+                                            <th scope="col">
+                                                <a class="hover-success action-icon"
+                                                   th:href="@{/client/create}">
+                                                    <i class="fas fa-plus"></i>
+                                                </a>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -87,6 +106,11 @@
                                                 'dd.MM.yyyy')}"></td>
                                                 <td th:text="${client.passport.citizenship.countryName}"></td>
                                                 <td th:text="${client.passport.id}"></td>
+                                                <td class="action-icon">
+                                                    <a th:href="@{'/client/' + ${client.id}}">
+                                                        <i class="fas fa-chevron-right"></i>
+                                                    </a>
+                                                </td>
                                             </tr>
                                         </th:block>
                                     </tbody>

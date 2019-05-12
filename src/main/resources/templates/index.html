@@ -6,7 +6,7 @@
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title th:text="#{title.main.page}"></title>
-        <link rel="icon" th:href="@{/assets/favicon.ico}">
+        <link rel="icon" th:href="@{/assets/bank-icon.png}">
         <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
         <link rel="stylesheet" th:href="@{/css/main.css}">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
@@ -28,20 +28,21 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/operations}">
-                            <span th:text="#{nav.actions}"></span>
+                        <a class="nav-link" th:href="@{/operation}">
+                            <span th:text="#{nav.operation}"></span>
                         </a>
                     </li>
                 </ul>
             </div>
-
         </header>
         <div class="container-fluid">
             <div class="row row-center">
                 <div class="col-12">
                     <div class="rounded-container smooth-shadow">
                         <div class="title-container">
-                            <img src="https://belgazprombank.by/uploads/userfiles/images/logorus.png" alt="">
+                            <a class="navbar-brand scroll-top">
+                                <img src="https://belgazprombank.by/uploads/userfiles/images/logorus.png" alt="">
+                            </a>
                         </div>
                         <div class="rounded-container smooth-shadow">
                             <div class="user-info">
@@ -53,7 +54,7 @@
                                     <div class="form-group col-md-8"></div>
                                     <div class="form-group col-md-4">
                                         <a th:href="@{/worker/logIn}" role="button"
-                                           class="btn btn-primary float-right">
+                                           class="btn-custom btn btn-success float-right">
                                             <span th:text="#{btn.login}"></span>
                                         </a>
                                     </div>
