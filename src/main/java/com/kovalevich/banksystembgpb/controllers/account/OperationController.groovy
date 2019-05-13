@@ -4,15 +4,18 @@ import com.kovalevich.banksystembgpb.config.BankConfig
 import com.kovalevich.banksystembgpb.exceptions.worker.WorkerNotAuthorizedException
 import com.kovalevich.banksystembgpb.services.account.abstraction.AccountService
 import com.kovalevich.banksystembgpb.services.account.abstraction.AccountTypeService
+import com.kovalevich.banksystembgpb.services.account.abstraction.CloseBankDayService
 import com.kovalevich.banksystembgpb.services.account.abstraction.ContractService
 import com.kovalevich.banksystembgpb.services.account.abstraction.CurrencyService
 import com.kovalevich.banksystembgpb.services.client.ClientService
 import com.kovalevich.banksystembgpb.services.security.AuthorizationService
 import com.kovalevich.banksystembgpb.services.worker.WorkerService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.server.ResponseStatusException
 
 @Controller
 @RequestMapping(value = '/operation')
@@ -38,6 +41,9 @@ class OperationController {
 
     @Autowired
     AccountTypeService accountTypeService
+
+    @Autowired
+    CloseBankDayService closeBankDayService
 
     @RequestMapping
     def index(Model model) {
@@ -193,5 +199,22 @@ class OperationController {
         return 'operation/deposit'
     }
 
+    @RequestMapping(value = '/closeBankDay')
+    def closeBankDay() {
+        try {
+            workerService.checkAuthorization()
+            def worker = authorizationService.workerFromSession
 
+            def args = [:]
+            args.worker = worker
+
+            closeBankDayService.closeBankDay(args)
+
+            return 'redirect:/operation'
+        }
+        catch (WorkerNotAuthorizedException e) {
+            e.printStackTrace()
+            return 'redirect:/worker/logIn'
+        }
+    }
 }
